@@ -25,7 +25,7 @@ function Login(props: Props) {
     actions.userLogin({
       username,
       password,
-      podName: "Fairdrive",
+      podName: "Home",
     });
     actions.getPods();
   }

@@ -1,28 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../../store/themeContext/themeContext";
 import { StoreContext } from "../../store/store";
 import useStyles from "./driveStyles";
-import { Modal } from "@material-ui/core";
 import CardGrid from "../../components/cardGrid/cardGrid";
-import FileCard from "../../components/cards/fileCard";
-import FileModal from "../../components/fileModal/fileModal";
 import UploadModal from "../../components/uploadModal/uploadModal";
-import sortByProp from "../../store/helpers/sort";
-import OpenInDapp from "../modals/openInDapp/openInDapp";
-import ButtonNavbar from "../buttonNavbar/buttonNavbar";
-import FileList from "../fileList/fileList";
-import {
-  ButtonPlus,
-  PodInfo,
-  ShareIcon,
-  UploadIcon,
-} from "../../components/icons/icons";
-import { CreateNew } from "../modals/createNew/createNew";
-import {
-  createDirectory,
-  downloadAllFiles,
-  filePreview,
-} from "src/store/services/fairOS";
+
+import { Controlled as ControlledZoom } from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
+
+import { UploadIcon } from "../../components/icons/icons";
 import urlPath from "src/store/helpers/urlPath";
 
 export interface Props {
@@ -66,10 +53,6 @@ function Drive(props: Props) {
     // eslint-disable-next-line
   }, [state.fileUploaded, state.directory, responseCreation]);
 
-  useEffect(() => {
-    createListOfImages();
-  }, [state.entries]);
-
   const handleShowDialog = (blobFile: any) => {
     setBlobFile(blobFile);
     setIsOpen(true);
@@ -91,10 +74,12 @@ function Drive(props: Props) {
       // setImages(mappedImages);
     }
   };
-
-  const handleUploadModal = async (value) => {
+  useEffect(() => {
+    createListOfImages();
+  }, [state.entries]);
+  async function handleUploadModal(value) {
     setOpenUpload(value);
-  };
+  }
 
   useEffect(() => {
     if (responseCreation === true) {
@@ -102,7 +87,15 @@ function Drive(props: Props) {
       setResponseCreation(false);
     }
   }, [responseCreation]);
+  const [isZoomed, setIsZoomed] = useState(false);
 
+  const handleImgLoad = useCallback(() => {
+    setIsZoomed(true);
+  }, []);
+
+  const handleZoomChange = useCallback((shouldZoom) => {
+    setIsZoomed(shouldZoom);
+  }, []);
   return (
     <div className={classes.Drive}>
       {/* Needs to go into buttonNavbar component */}
@@ -129,12 +122,9 @@ function Drive(props: Props) {
         {state.downloadedFiles !== null &&
           state.downloadedFiles !== undefined &&
           state.downloadedFiles.map((image: any) => (
-            <img
-              className={classes.imagePreview}
-              src={image}
-              onClick={handleShowDialog}
-              alt="img"
-            ></img>
+            <ControlledZoom isZoomed={isZoomed} onZoomChange={handleZoomChange}>
+              <img className={classes.imagePreview} src={image} alt="img"></img>
+            </ControlledZoom>
           ))}
         {(state.downloadedFiles === null ||
           state.downloadedFiles === undefined) && <div>Loading files..</div>}
