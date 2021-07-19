@@ -122,9 +122,9 @@ function Drive(props: Props) {
         {state.downloadedFiles !== null &&
           state.downloadedFiles !== undefined &&
           state.downloadedFiles.map((image: any) => (
-            <ControlledZoom isZoomed={isZoomed} onZoomChange={handleZoomChange}>
-              <img className={classes.imagePreview} src={image} alt="img"></img>
-            </ControlledZoom>
+            // <ControlledZoom isZoomed={isZoomed} onZoomChange={handleZoomChange}>
+            <img className={classes.imagePreview} src={image} alt="img"></img>
+            // </ControlledZoom>
           ))}
         {(state.downloadedFiles === null ||
           state.downloadedFiles === undefined) && <div>Loading files..</div>}
