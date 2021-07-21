@@ -28,7 +28,7 @@ function Modal(props: Props) {
         <div className={classes.header}>
           {props.icon && <ModalFolder className={classes.icon} />}
           {props.heading}
-          <Close className={classes.closeIcon} onClick={props.handleClose} />
+          {/* <Close className={classes.closeIcon} onClick={props.handleClose} /> */}
         </div>
         <div className={classes.flex}>
           <div className={classes.body}>

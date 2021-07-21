@@ -4,7 +4,7 @@ import { Props } from './loginRegisterPage';
 const useStyles = makeStyles(() =>
 	createStyles({
 		Main: {
-
+			height: 'calc(100vh - 12rem)',
 		},
 
 		loginRegisterButtons: {

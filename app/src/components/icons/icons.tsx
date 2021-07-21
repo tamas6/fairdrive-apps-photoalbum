@@ -18,6 +18,7 @@ import { ReactComponent as Image } from "../../media/fairdrive/Image.svg";
 import { ReactComponent as Profile } from "../../media/fairdrive/Profile.svg";
 import { ReactComponent as SearchFD } from "../../media/fairdrive/Search.svg";
 import { ReactComponent as Settings } from "../../media/fairdrive/Settings.svg";
+import { ReactComponent as Swarm } from "../../media/fairdrive/swarm.svg";
 import { ReactComponent as Time } from "../../media/fairdrive/Time.svg";
 import { ReactComponent as Logo } from "../../media/fairdrive/logo.svg";
 import { ReactComponent as StartFolder } from "../../media/UI/getStartedFolder.svg";
@@ -97,8 +98,9 @@ export {
   DAppIcon,
   Logo,
   LinumLabs,
-FairdData,
-Github,
-Medium,
-Discord
+  FairdData,
+  Github,
+  Medium,
+  Discord,
+  Swarm,
 };

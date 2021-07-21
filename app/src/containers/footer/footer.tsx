@@ -6,7 +6,7 @@ import {
   FairdData,
   Github,
   Medium,
-  Discord,
+  Swarm,
 } from "src/components/icons/icons";
 
 export interface Props {}
@@ -18,8 +18,30 @@ function Footer(props: Props) {
   return (
     <div className={classes.footer}>
       <div className={classes.links}>
-        <FairdData className={classes.link} style={{ height: "5rem" }} />
-        <LinumLabs className={classes.link} style={{ height: "7rem" }} />
+        <a
+          rel="noopener noreferrer"
+          target="_blank"
+          href="https://www.ethswarm.org/"
+        >
+          <Swarm className={classes.linkIcon} />
+        </a>
+        <a
+          rel="noopener noreferrer"
+          target="_blank"
+          className={classes.linkItem}
+          href="https://fairdatasociety.org/"
+        >
+          <FairdData className={classes.link} style={{ height: "5rem" }} />
+        </a>
+
+        <a
+          rel="noopener noreferrer"
+          target="_blank"
+          className={classes.linkItem}
+          href="https://linumlabs.com"
+        >
+          <LinumLabs className={classes.link} style={{ height: "7rem" }} />
+        </a>
       </div>
       <div className={classes.links}>
         <div className={classes.text}>

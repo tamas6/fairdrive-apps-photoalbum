@@ -3,6 +3,7 @@ import Navbar from "./navbar/navbar";
 import Main from "./main/main";
 import useStyles from "./MainWrapperStyles";
 import { useTheme } from "../store/themeContext/themeContext";
+import Footer from "./footer/footer";
 
 export default function MainWrapper() {
   const { theme } = useTheme();
@@ -12,6 +13,8 @@ export default function MainWrapper() {
     <div className={classes.App}>
       <Navbar />
       <Main></Main>
+      <Footer />
+
       {/* <Switch>
           <Route exact path="/" component={Main} />
           <Route exact path="/drive/:path" component={Home} />

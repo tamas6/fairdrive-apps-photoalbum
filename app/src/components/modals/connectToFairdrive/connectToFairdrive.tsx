@@ -30,6 +30,7 @@ function ConnectToFairdrive(props: Props) {
       heading="Connect to Fairdrive"
       button="Authorize"
       handleClick={onLogin}
+      handleClickAway={() => {}}
     >
       <p className={classes.label}>USERNAME</p>
       <TextField
