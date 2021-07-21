@@ -21,7 +21,7 @@ const useStyles = makeStyles(() =>
 			transitionTimingFunction: 'cubic-bezier(0.820, 0.085, 0.395, 0.895)',
 		},
 		imagePreview: {
-			width: '25rem',
+			width: '30rem',
 			padding:"2rem",
 			height: '45rem',
 			display: 'flex',
