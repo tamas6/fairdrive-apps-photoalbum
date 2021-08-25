@@ -23,14 +23,12 @@ function PodSidebar(props: Props) {
   const [podName, setPodName] = useState("");
   const [podCreated, setPodCreated] = useState(false);
   useEffect(() => {
-    if (state.podsOpened.includes(state.podName))
-      actions.getDirectory({ directory: "root", podName: state.podName });
-    // eslint-disable-next-line
-    actions.setDirectory("root");
-    actions.getDirectory({
-      directory: state.directory,
-      podName: state.podName,
-    });
+    if (state.podsOpened.includes(state.podName)) {
+      actions.getDirectory({
+        directory: state.directory,
+        podName: state.podName,
+      });
+    }
   }, [state.podName, state.podsOpened]);
 
   const setPod = async (pod) => {
