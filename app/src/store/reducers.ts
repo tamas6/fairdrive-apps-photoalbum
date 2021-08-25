@@ -47,7 +47,7 @@ const initialState: State = {
 	directory:'root',
 	pods:[],
 	podMsg: null,
-	podName:"Home",
+	podName:"",
 	podsOpened:[],
 	downloadedFiles:[]
 };
