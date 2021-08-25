@@ -31,7 +31,7 @@ function Drive(props: Props) {
 
   async function loadDirectory() {
     try {
-      // actions.setDirectory("root");
+      actions.setDirectory("root");
       actions.getDirectory({
         directory: state.directory,
         password: state.password,
@@ -42,7 +42,7 @@ function Drive(props: Props) {
     }
   }
   useEffect(() => {
-    if (state.entries === null || state.entries === undefined) loadDirectory();
+    // if (state.entries === null || state.entries === undefined) loadDirectory();
   });
 
   useEffect(() => {
