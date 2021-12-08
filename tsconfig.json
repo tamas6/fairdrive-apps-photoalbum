@@ -19,29 +19,6 @@
     "noImplicitAny": true,
     "jsx": "preserve",
     "baseUrl": ".",
-    "paths": {
-      "@api/*": [
-        "src/api/*"
-      ],
-      "@components/*": [
-        "src/components/*"
-      ],
-      "@data/*": [
-        "src/data/*"
-      ],
-      "@interfaces/*": [
-        "src/interfaces/*"
-      ],
-      "@media/*": [
-        "src/media/*"
-      ],
-      "@pages/*": [
-        "src/pages/*"
-      ],
-      "@styles/*": [
-        "src/styles/*"
-      ]
-    },
     "incremental": true
   },
   "include": [
