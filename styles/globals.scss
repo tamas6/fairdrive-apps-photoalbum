@@ -3,13 +3,28 @@
 @tailwind utilities;
 
 :root {
-  --color-aqua: #6ecbbb;
-  --color-orange: #ff8a00;
-  --color-purple: #d372ef;
+  --color-purple: #434d7e;
+  --color-gray: #e2e8f8;
+}
+
+html {
+  font-size: 16px;
 }
 
 body {
   margin: 0;
   padding: 0;
   font-family: 'Work Sans', sans-serif;
+}
+
+.text-purple {
+  color: var(--color-purple);
+}
+
+.bg-purple {
+  background-color: var(--color-purple);
+}
+
+.bg-gray {
+  background-color: var(--color-gray);
 }
