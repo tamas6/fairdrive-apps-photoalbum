@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import classes from './Topbar.module.scss';
 import Dropdown from 'components/Dropdown';
+import SearchBar from 'components/SearchBar';
 import Logo from 'assets/logo.svg';
 import UserIcon from 'assets/icons/user.svg';
 import DappIcon from 'assets/icons/dapp.svg';
@@ -25,16 +26,16 @@ const Topbar = () => {
         </div>
 
         <div className="flex items-center mr-8">
+          <SearchBar />
+
           <Link href="/">
             <a>
               <DappIcon className="mx-3" />
             </a>
           </Link>
-
           <Link href="/">
             <a className="mx-3 text-purple">Activity</a>
           </Link>
-
           <Link href="/">
             <a className="ml-3">
               <UserIcon />
