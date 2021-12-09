@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import ChevronDown from 'assets/chevron-down.svg';
+import ChevronDown from 'assets/icons/chevron-down.svg';
 
 type Props = {
   children: ReactNode;
