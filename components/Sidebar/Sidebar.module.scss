@@ -1,6 +1,32 @@
 .root {
-  background-color: #ffffff;
+  // display: flex;
+}
 
-  /* left-side-nav-shadow */
-  box-shadow: 0px 0px 21px rgba(94, 94, 94, 0.17);
+.list {
+  @apply z-0;
+  @apply my-6;
+  box-shadow: 0 0 24px #d5d8ec;
+}
+
+.listItem {
+  @apply z-0;
+  @apply relative;
+  @apply bg-white;
+  @apply flex;
+  @apply items-center;
+  @apply justify-between;
+  @apply py-5;
+  @apply px-6;
+
+  transition: box-shadow 250ms linear;
+  box-shadow: 0px 0px 18px rgba(92, 86, 133, 0.18);
+
+  &:hover {
+    box-shadow: 0px 0px 18px rgba(92, 86, 133, 0.38);
+  }
+
+  &Active {
+    @apply z-10;
+    box-shadow: 0px 0px 30px rgba(92, 86, 133, 0.28), inset -4px 0px 0px #434d7e;
+  }
 }
