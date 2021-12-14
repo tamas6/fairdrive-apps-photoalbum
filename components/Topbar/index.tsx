@@ -5,8 +5,11 @@ import SearchBar from 'components/SearchBar';
 import Logo from 'assets/logo.svg';
 import UserIcon from 'assets/icons/user.svg';
 import DappIcon from 'assets/icons/dapp.svg';
+import useUser from 'hooks/useUser';
 
 const Topbar = () => {
+  const { user } = useUser();
+
   return (
     <header
       className={`fixed flex top-0 left-0 right-0 z-10 h-20 bg-gray ${classes.root}`}
@@ -33,14 +36,18 @@ const Topbar = () => {
               <DappIcon className="mx-3" />
             </a>
           </Link>
-          <Link href="/">
-            <a className="mx-3 text-purple">Activity</a>
-          </Link>
-          <Link href="/">
-            <a className="ml-3">
-              <UserIcon />
-            </a>
-          </Link>
+          {!!user && (
+            <>
+              <Link href="/">
+                <a className="mx-3 text-purple">Activity</a>
+              </Link>
+              <Link href="/">
+                <a className="ml-3">
+                  <UserIcon />
+                </a>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>
