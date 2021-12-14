@@ -3,9 +3,11 @@ import { useState } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import AppProvider from 'contexts/App';
+import UserProvider from 'contexts/User';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const [theme, setTheme] = useState('dark');
+  const [user, setUser] = useState(null);
 
   return (
     <>
@@ -14,7 +16,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <AppProvider value={{ theme, setTheme }}>
-        <Component {...pageProps} />
+        <UserProvider value={{ user, setUser }}>
+          <Component {...pageProps} />
+        </UserProvider>
       </AppProvider>
     </>
   );
