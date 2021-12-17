@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import type { NextPage } from 'next';
 import Layout from 'components/Layout';
 import Title from 'components/Title';
@@ -10,7 +9,7 @@ const Login: NextPage = () => {
 
   useEffect(() => {
     setUser(null);
-  }, []);
+  }, [setUser]);
 
   return (
     <Layout>
