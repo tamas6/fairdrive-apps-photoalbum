@@ -1,11 +1,8 @@
+@import './theme.scss';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --color-purple: #434d7e;
-  --color-gray: #e2e8f8;
-}
 
 html {
   font-size: 16px;
@@ -18,13 +15,25 @@ body {
 }
 
 .text-purple {
-  color: var(--color-purple);
+  color: $color-purple;
 }
 
 .bg-purple {
-  background-color: var(--color-purple);
+  background-color: $color-purple;
+}
+
+.border-purple {
+  border-color: $color-purple;
 }
 
 .bg-gray {
-  background-color: var(--color-gray);
+  background-color: $color-gray;
+}
+
+.bg-blue {
+  background-color: $color-blue;
+}
+
+.border-blue {
+  border-color: $color-blue;
 }
