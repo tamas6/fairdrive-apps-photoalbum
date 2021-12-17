@@ -3,7 +3,7 @@ import classes from './Title.module.scss';
 
 type Props = {
   children: ReactNode;
-  sub: ReactNode;
+  sub?: ReactNode;
 };
 
 const Title = ({ children, sub }: Props) => {
