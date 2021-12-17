@@ -5,19 +5,26 @@ import TextInput from 'components/TextInput';
 import Button from 'components/Button';
 import useUser from 'hooks/useUser';
 import Router from 'next/router';
-import { SyntheticEvent } from 'react';
+import { SyntheticEvent, useEffect } from 'react';
+import useApp from 'hooks/useApp';
 
 const Login: NextPage = () => {
-  const { setUser } = useUser();
+  const { setUser, isAuthenticated } = useUser();
+  const { setSidebarVisible } = useApp();
 
-  // const gotoHome = () => {
-  //   Router.push('/');
-  // };
+  useEffect(() => {
+    if (isAuthenticated) {
+      Router.push('/');
+    }
+  }, [isAuthenticated]);
 
   const onSubmitHandler = (event: SyntheticEvent) => {
     event.preventDefault();
     console.log('onSubmitHandler');
-    setUser({});
+    setSidebarVisible(true);
+    setUser({
+      username: 'johndoe',
+    });
     Router.push('/');
   };
 

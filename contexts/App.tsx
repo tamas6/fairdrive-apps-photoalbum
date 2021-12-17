@@ -1,12 +1,10 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
 
-export type ContextProps = {
-  theme: string;
-  setTheme?: Dispatch<SetStateAction<string>>;
-};
+export interface ContextProps {
+  sidebarVisible: boolean;
+  setSidebarVisible: Dispatch<SetStateAction<boolean>>;
+}
 
-export const AppContext = createContext<ContextProps>({
-  theme: 'dark',
-});
+export const AppContext = createContext<ContextProps>({} as ContextProps);
 
 export default AppContext.Provider;

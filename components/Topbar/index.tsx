@@ -8,7 +8,7 @@ import DappIcon from 'assets/icons/dapp.svg';
 import useUser from 'hooks/useUser';
 
 const Topbar = () => {
-  const { user } = useUser();
+  const { user, logout } = useUser();
 
   return (
     <header
@@ -41,7 +41,7 @@ const Topbar = () => {
               <Link href="/">
                 <a className="mx-3 text-purple">Activity</a>
               </Link>
-              <Link href="/">
+              <Link href="/logout">
                 <a className="ml-3">
                   <UserIcon />
                 </a>

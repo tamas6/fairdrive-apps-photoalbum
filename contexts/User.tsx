@@ -1,12 +1,18 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
 
-export type UserContextProps = {
-  user: any;
-  setUser?: Dispatch<SetStateAction<any>>;
+export type UserObject = {
+  username: string;
 };
 
-export const UserContext = createContext<UserContextProps>({
-  user: null,
-});
+export interface UserContextProps {
+  user: UserObject;
+  setUser: Dispatch<SetStateAction<UserObject>>;
+  logout: () => void;
+  isAuthenticated: boolean;
+}
+
+export const UserContext = createContext<UserContextProps>(
+  {} as UserContextProps
+);
 
 export default UserContext.Provider;

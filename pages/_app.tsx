@@ -6,8 +6,17 @@ import AppProvider from 'contexts/App';
 import UserProvider from 'contexts/User';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  const [theme, setTheme] = useState('dark');
+  const [sidebarVisible, setSidebarVisible] = useState(false);
   const [user, setUser] = useState(null);
+
+  const userProviderValue = {
+    user,
+    setUser,
+    isAuthenticated: !!user,
+    logout: () => {
+      setUser(null);
+    },
+  };
 
   return (
     <>
@@ -15,8 +24,8 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <title>PhotoAlbum | Fairdrive Apps</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <AppProvider value={{ theme, setTheme }}>
-        <UserProvider value={{ user, setUser }}>
+      <AppProvider value={{ sidebarVisible, setSidebarVisible }}>
+        <UserProvider value={userProviderValue}>
           <Component {...pageProps} />
         </UserProvider>
       </AppProvider>
