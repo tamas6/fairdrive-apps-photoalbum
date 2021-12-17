@@ -23,7 +23,10 @@ const Layout = ({ children }: Props) => {
   return (
     <section className="relative w-full min-h-screen">
       <Topbar />
-      <main className={`${sidebarVisible ? 'pl-64' : ''} pt-20 px-8`}>
+      <main
+        role="content"
+        className={`${sidebarVisible ? 'ml-72' : ''} pt-20 px-6`}
+      >
         {children}
       </main>
       {sidebarVisible && <Sidebar />}
