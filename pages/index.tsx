@@ -5,19 +5,20 @@ import Router from 'next/router';
 import { useEffect } from 'react';
 
 const Home: NextPage = () => {
-  const { user } = useUser();
+  const { isAuthenticated } = useUser();
 
   useEffect(() => {
-    if (!user) {
+    if (!isAuthenticated) {
       Router.push('/login');
     }
-  }, [user]);
+  }, [isAuthenticated]);
 
   return (
-    <Layout>
-      <h1 className="text-center">Fairdrive</h1>
-      {!user && <h3 className="text-center">user loggeout</h3>}
-    </Layout>
+    isAuthenticated && (
+      <Layout>
+        <h1 className="text-center">Fairdrive</h1>
+      </Layout>
+    )
   );
 };
 

@@ -8,7 +8,7 @@ import DappIcon from 'assets/icons/dapp.svg';
 import useUser from 'hooks/useUser';
 
 const Topbar = () => {
-  const { user, logout } = useUser();
+  const { user, isAuthenticated } = useUser();
 
   return (
     <header
@@ -25,18 +25,19 @@ const Topbar = () => {
 
       <div className="flex-grow flex items-center justify-between">
         <div className="pl-2">
-          <Dropdown>FairOS (Server)</Dropdown>
+          {isAuthenticated && <Dropdown>FairOS (Server)</Dropdown>}
         </div>
 
         <div className="flex items-center mr-8">
-          <SearchBar />
+          {isAuthenticated && <SearchBar />}
 
           <Link href="/">
             <a>
               <DappIcon className="mx-3" />
             </a>
           </Link>
-          {!!user && (
+
+          {isAuthenticated && (
             <>
               <Link href="/">
                 <a className="mx-3 text-purple">Activity</a>
