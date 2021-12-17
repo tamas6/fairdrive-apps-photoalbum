@@ -1,10 +1,10 @@
 module.exports = {
-  purge: [],
-  darkMode: false,
+  content: [
+    // Example content paths...
+    './public/**/*.html',
+    './**/*.{ts,tsx}',
+  ],
   theme: {
-    extend: {},
-  },
-  variants: {
     extend: {},
   },
   plugins: [require('@tailwindcss/aspect-ratio')],

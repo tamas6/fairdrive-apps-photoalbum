@@ -17,7 +17,7 @@ module.exports = withBundleAnalyzer({
     locales: ['en-US'],
     defaultLocale: 'en-US',
   },
-  images: {
-    domains: ['music.com'],
-  },
+  // images: {
+  //   domains: ['music.com'],
+  // },
 });
