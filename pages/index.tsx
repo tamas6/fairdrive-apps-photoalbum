@@ -14,16 +14,14 @@ import useFairOs from 'hooks/useFairOs';
 
 const Home: NextPage = () => {
   const { openPod, getDirectory } = useFairOs();
-  const [pod, setPod] = useState(null);
   const [files, setFiles] = useState(null);
   const router = useRouter();
   const { slug = '/' } = router.query;
   const { user, isAuthenticated } = useUser();
 
   const getPod = async () => {
-    const podName = slug === '/' ? 'Home' : slug;
-    const response = await openPod(podName);
-    setPod(response);
+    const podName: string = slug === '/' ? 'Home' : slug[0];
+    await openPod(podName);
 
     const { data } = await getDirectory({ podName, directory: 'root' });
 
