@@ -8,7 +8,9 @@ import DappIcon from 'assets/icons/dapp.svg';
 import useUser from 'hooks/useUser';
 
 const Topbar = () => {
-  const { user, isAuthenticated } = useUser();
+  const { isAuthenticated } = useUser();
+
+  const dropdownOptions = [{ title: 'Coming Soon' }];
 
   return (
     <header
@@ -25,7 +27,11 @@ const Topbar = () => {
 
       <div className="flex-grow flex items-center justify-between">
         <div className="pl-2">
-          {isAuthenticated && <Dropdown>FairOS (Server)</Dropdown>}
+          {isAuthenticated && (
+            <Dropdown className="w-44" options={dropdownOptions}>
+              FairOS (Server)
+            </Dropdown>
+          )}
         </div>
 
         <div className="flex items-center mr-8">
