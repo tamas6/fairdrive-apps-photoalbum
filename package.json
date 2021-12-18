@@ -20,13 +20,12 @@
     "test": "jest"
   },
   "dependencies": {
-    "@emotion/react": "^11.4.1",
-    "@emotion/styled": "^11.3.0",
-    "axios": "^0.21.1",
+    "axios": "^0.24.0",
     "next": "^12.0.7",
+    "qs": "^6.10.2",
     "react": "^17.0.2",
     "react-dom": "17.0.2",
-    "swr": "^1.0.0",
+    "swr": "^1.1.2-beta.0",
     "use-onclickoutside": "^0.4.0"
   },
   "devDependencies": {
@@ -38,6 +37,7 @@
     "@testing-library/react": "^12.1.2",
     "@types/jest": "^27.0.3",
     "@types/node": "^16.7.10",
+    "@types/qs": "^6.9.7",
     "@types/react": "17.0.2",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "autoprefixer": "^10.4.0",
@@ -55,9 +55,9 @@
     "madge": "^5.0.1",
     "path": "^0.12.7",
     "postcss": "^8.4.5",
-    "prettier": "^2.3.2",
+    "prettier": "^2.5.1",
     "prop-types": "^15.7.2",
-    "sass": "^1.39.0",
+    "sass": "^1.45.0",
     "tailwindcss": "^3.0.7",
     "typescript": "4.4.2"
   },

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { ReactNode, useEffect } from 'react';
 import Router from 'next/router';
 import Topbar from 'components/Topbar';
@@ -18,7 +19,7 @@ const Layout = ({ children }: Props) => {
       setSidebarVisible(false);
       Router.push('/login');
     }
-  }, [isAuthenticated, setSidebarVisible]);
+  }, [isAuthenticated]);
 
   return (
     <section className="relative w-full min-h-screen">

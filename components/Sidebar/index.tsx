@@ -1,9 +1,16 @@
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import classes from './Sidebar.module.scss';
 import AlertIcon from 'assets/icons/alert.svg';
-import BinIcon from 'assets/icons/bin.svg';
+// import BinIcon from 'assets/icons/bin.svg';
 import ChevronIcon from 'assets/icons/chevron-right.svg';
+import usePods from 'hooks/usePods';
 
 const Sidebar = () => {
+  const { pods } = usePods();
+  const router = useRouter();
+  const { slug = '/' } = router.query;
+
   return (
     <aside
       className={`fixed left-0 top-0 bottom-0 z-0 w-48 lg:w-72 px-6 pt-20 bg-white shadow-xl ${classes.root}`}
@@ -13,18 +20,20 @@ const Sidebar = () => {
       </header>
 
       <main className={`${classes.list} text-purple`}>
-        <a className={classes.listItem} href="#">
-          Pod 1 <ChevronIcon />
-        </a>
-        <a className={`${classes.listItem} ${classes.listItemActive}`} href="#">
-          Pod 2 <ChevronIcon />
-        </a>
-        <a className={classes.listItem} href="#">
-          Pod 3 <ChevronIcon />
-        </a>
-        <a className={classes.listItem} href="#">
+        {pods.map((pod, ix) => (
+          <Link key={ix + pod.slug} href={pod.slug}>
+            <a
+              className={`${classes.listItem} ${
+                slug === pod.slug ? classes.listItemActive : ''
+              }`}
+            >
+              {pod.title} <ChevronIcon />
+            </a>
+          </Link>
+        ))}
+        {/* <a className={classes.listItem} href="#">
           Trash Pod <BinIcon />
-        </a>
+        </a> */}
       </main>
 
       <footer className="flex items-center mt-8 text-purple">
