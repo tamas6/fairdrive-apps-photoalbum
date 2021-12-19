@@ -3,17 +3,15 @@ import FolderIcon from 'assets/icons/folder.svg';
 import HamburgerIcon from 'assets/icons/hamburger.svg';
 import UnionIcon from 'assets/icons/union.svg';
 import Dropdown from 'components/Dropdown';
+import usePods from 'hooks/usePods';
 
 const ContentHeader = () => {
-  const dropdownOptions = [
-    { title: 'Pod 1', href: '/' },
-    { title: 'Pod 2', href: '/' },
-  ];
+  const { pods } = usePods();
 
   return (
     <div className="my-6 flex justify-between">
       <div className="flex items-center">
-        <Dropdown style="outset" options={dropdownOptions}>
+        <Dropdown style="outset" options={pods}>
           <FolderIcon />
         </Dropdown>
         <span className="text-xl font-semibold text-purple">

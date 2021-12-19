@@ -1,13 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import 'styles/globals.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import Router from 'next/router';
 import AppProvider from 'contexts/App';
 import UserProvider from 'contexts/User';
+import PodsProvider from 'contexts/Pods';
+import useFairOs from 'hooks/useFairOs';
+
+const localUser =
+  typeof localStorage !== 'undefined' &&
+  JSON.parse(localStorage.getItem('user'));
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
-  const [user, setUser] = useState(null);
+  const [pods, setPods] = useState([]);
+  const [user, setUser] = useState(
+    localUser?.username
+      ? { username: localUser.username, password: null }
+      : null
+  );
+  const { userLoggedIn, getPodsWithHref } = useFairOs();
 
   const userProviderValue = {
     user,
@@ -18,6 +32,28 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     },
   };
 
+  const checkUserRemotely = async () => {
+    const { data } = await userLoggedIn(user.username);
+
+    if (!data.loggedin) {
+      Router.push('/logout');
+    } else {
+      setSidebarVisible(true);
+      setUser({
+        username: user.username,
+        password: window.prompt('Insert your password again!'),
+      });
+
+      setPods(await getPodsWithHref());
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      checkUserRemotely();
+    }
+  }, []);
+
   return (
     <>
       <Head>
@@ -26,7 +62,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       </Head>
       <AppProvider value={{ sidebarVisible, setSidebarVisible }}>
         <UserProvider value={userProviderValue}>
-          <Component {...pageProps} />
+          <PodsProvider value={{ pods, setPods }}>
+            <Component {...pageProps} />
+          </PodsProvider>
         </UserProvider>
       </AppProvider>
     </>

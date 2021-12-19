@@ -2,6 +2,7 @@ import { createContext, Dispatch, SetStateAction } from 'react';
 
 export type UserObject = {
   username: string;
+  password?: string | null;
 };
 
 export interface UserContextProps {

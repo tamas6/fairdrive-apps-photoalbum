@@ -4,7 +4,7 @@ import Button, { StyleTypes } from 'components/Button';
 import ChevronDownIcon from 'assets/icons/chevron-down.svg';
 import useOnClickOutside from 'use-onclickoutside';
 
-interface DropdownItem {
+export interface DropdownItem {
   title: string;
   href?: string;
 }
