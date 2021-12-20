@@ -9,8 +9,13 @@ const ImageGrid = ({ images }: ImageGridProps) => {
     <div className={classes.content}>
       <div className="flex flex-wrap">
         {images &&
-          images.map((file: any, key: any) => (
-            <img className={classes.imageGridItem} src={file} key={file} />
+          images.map((file, key: any) => (
+            <img
+              className={classes.imageGridItem}
+              src={file}
+              key={key + file}
+              alt={key}
+            />
           ))}
       </div>
     </div>

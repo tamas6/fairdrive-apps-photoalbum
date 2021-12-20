@@ -13,26 +13,36 @@ import PlusIcon from 'assets/icons/plus.svg';
 import Button from 'components/Button';
 import useFairOs from 'hooks/useFairOs';
 import ImageGrid from 'components/ImageGrid';
+import Spinner from 'components/Spinner';
+import useFiles from 'hooks/useFiles';
 
 const Home: NextPage = () => {
+  const { files, setFiles } = useFiles();
   const { openPod, getDirectory, downloadAllFiles } = useFairOs();
-  const [loadedFiles, setLoadedFiles] = useState(null);
+  const [isPodLoading, setIsPodLoading] = useState(false);
   const router = useRouter();
   const { slug = '/' } = router.query;
   const { user, isAuthenticated } = useUser();
 
   const getPod = async () => {
+    setIsPodLoading(true);
+    setFiles([]);
+
     const podName: string = slug === '/' ? 'Home' : slug[0];
+
     await openPod(podName);
+
     const { data } = await getDirectory({ podName, directory: 'root' });
 
-    const res = await downloadAllFiles({
-      podName,
-      directory: 'root',
-      files: data.files,
-    });
-
-    setLoadedFiles(res);
+    downloadAllFiles(
+      {
+        podName,
+        directory: 'root',
+        files: data.files,
+      },
+      setFiles,
+      () => setIsPodLoading(false)
+    );
   };
 
   useEffect(() => {
@@ -71,8 +81,15 @@ const Home: NextPage = () => {
             </Button>
           </div>
         </div>
+
+        {isPodLoading && (
+          <div className="my-8">
+            <Spinner />
+          </div>
+        )}
+
         <div className="w-full">
-          <ImageGrid images={loadedFiles}></ImageGrid>
+          <ImageGrid images={files} />
         </div>
       </Layout>
     )

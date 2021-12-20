@@ -12,9 +12,7 @@ const Sidebar = () => {
   const { slug = '/' } = router.query;
 
   return (
-    <aside
-      className={`fixed left-0 top-0 bottom-0 z-0 w-48 lg:w-72 px-6 pt-20 bg-white shadow-xl ${classes.root}`}
-    >
+    <aside className={classes.root}>
       <header className="font-semibold text-2xl text-purple my-6">
         Your Pods
       </header>

@@ -5,6 +5,7 @@ import axios from 'axios';
 import { PodItem } from 'contexts/Pods';
 import urlPath from 'helpers/urlPath';
 import useUser from 'hooks/useUser';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 interface Payload {
   username?: string;
@@ -29,6 +30,7 @@ export interface DownloadFilesPayload {
 }
 
 const useFairOs = () => {
+  const [aborList, setAborList] = useState([]);
   const { user } = useUser();
 
   const login = async (payload: Payload) => {
@@ -204,43 +206,67 @@ const useFairOs = () => {
     directory: string,
     podName: string
   ) => {
+    const controller = new AbortController();
+    let writePath = '';
+
+    if (directory === 'root') {
+      writePath = '/';
+    } else {
+      writePath = '/' + urlPath(directory) + '/';
+    }
+
+    const formData = new FormData();
+
+    formData.append('file_path', writePath + filename);
+    formData.append('pod_name', podName);
+
     try {
-      let writePath = '';
-      if (directory === 'root') {
-        writePath = '/';
-      } else {
-        writePath = '/' + urlPath(directory) + '/';
-      }
-      const formData = new FormData();
-      formData.append('file_path', writePath + filename);
-      formData.append('pod_name', podName);
-      const downloadFile = await axios({
-        baseURL: host,
-        method: 'POST',
-        url: 'file/download',
+      const downloadFile = await axios.post(host + 'file/download', formData, {
         data: formData,
         responseType: 'blob',
         withCredentials: true,
+        signal: controller.signal,
       });
+
+      setAborList((list) => {
+        return [...list, controller];
+      });
+
       return downloadFile.data;
     } catch (err) {
       return err;
     }
   };
-  const downloadAllFiles = async (payload: DownloadFilesPayload) => {
-    const { files, directory, podName } = payload;
-    if (files !== null && files !== undefined) {
-      const res = Promise.all(
-        files.map(async (entry: any) => {
-          const url = window.URL.createObjectURL(
-            await downloadFilePreview(entry.name, urlPath(directory), podName)
-          );
-          return url;
-        })
-      );
 
-      return res;
+  const downloadAllFiles = (
+    payload: DownloadFilesPayload,
+    setFiles: Dispatch<SetStateAction<string[]>>,
+    callback: () => void
+  ) => {
+    aborList.forEach((controller) => {
+      controller.abort();
+    });
+    setAborList([]);
+
+    const { files, directory, podName } = payload;
+
+    if (files !== null && files !== undefined) {
+      files.map(async (entry: any) => {
+        const url = window.URL.createObjectURL(
+          await downloadFilePreview(entry.name, urlPath(directory), podName)
+        );
+
+        // Incremental loading
+        setFiles((files) => {
+          return [...files, url];
+        });
+      });
+
+      callback && callback();
+
+      return files;
     }
+
     return null;
   };
 

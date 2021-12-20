@@ -35,7 +35,6 @@ const Login: NextPage = () => {
 
   const onSubmitHandler = async (event: SyntheticEvent) => {
     event.preventDefault();
-    console.log('onSubmitHandler');
 
     const { data } = await login({
       username,
