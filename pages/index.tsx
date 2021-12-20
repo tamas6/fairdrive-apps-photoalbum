@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react-hooks/exhaustive-deps */
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -11,10 +12,11 @@ import AlertIcon from 'assets/icons/alert.svg';
 import PlusIcon from 'assets/icons/plus.svg';
 import Button from 'components/Button';
 import useFairOs from 'hooks/useFairOs';
+import ImageGrid from 'components/ImageGrid';
 
 const Home: NextPage = () => {
-  const { openPod, getDirectory } = useFairOs();
-  const [files, setFiles] = useState(null);
+  const { openPod, getDirectory, downloadAllFiles } = useFairOs();
+  const [loadedFiles, setLoadedFiles] = useState(null);
   const router = useRouter();
   const { slug = '/' } = router.query;
   const { user, isAuthenticated } = useUser();
@@ -22,10 +24,15 @@ const Home: NextPage = () => {
   const getPod = async () => {
     const podName: string = slug === '/' ? 'Home' : slug[0];
     await openPod(podName);
-
     const { data } = await getDirectory({ podName, directory: 'root' });
 
-    setFiles(data.files);
+    const res = await downloadAllFiles({
+      podName,
+      directory: 'root',
+      files: data.files,
+    });
+
+    setLoadedFiles(res);
   };
 
   useEffect(() => {
@@ -38,7 +45,7 @@ const Home: NextPage = () => {
     if (user && user.password) {
       getPod();
     }
-  }, [user]);
+  }, [user, slug]);
 
   return (
     isAuthenticated && (
@@ -64,8 +71,9 @@ const Home: NextPage = () => {
             </Button>
           </div>
         </div>
-
-        {JSON.stringify(files)}
+        <div className="w-full">
+          <ImageGrid images={loadedFiles}></ImageGrid>
+        </div>
       </Layout>
     )
   );

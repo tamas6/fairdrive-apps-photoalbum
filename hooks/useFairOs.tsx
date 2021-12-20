@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-useless-catch */
 // import qs from 'qs';
 import axios from 'axios';
 import { PodItem } from 'contexts/Pods';
+import urlPath from 'helpers/urlPath';
 import useUser from 'hooks/useUser';
 
 interface Payload {
@@ -19,6 +21,12 @@ interface Payload {
 const host = process.env.NEXT_PUBLIC_FAIROSHOST;
 
 const podNameDefault = 'Home';
+
+export interface DownloadFilesPayload {
+  podName: string;
+  directory: string;
+  files: any;
+}
 
 const useFairOs = () => {
   const { user } = useUser();
@@ -41,7 +49,7 @@ const useFairOs = () => {
         withCredentials: true,
       });
 
-      localStorage.setItem('user', JSON.stringify({ username }));
+      // localStorage.removeItem('user');
 
       return response;
     } catch (error) {
@@ -142,7 +150,6 @@ const useFairOs = () => {
       },
       withCredentials: true,
     });
-
     return response;
   };
 
@@ -176,7 +183,7 @@ const useFairOs = () => {
     const podsWithHref: PodItem[] = [];
 
     data.pod_name.forEach((pod: string) => {
-      if (pod.toLowerCase() === 'home') {
+      if (pod === 'Home') {
         podsWithHref.push({
           title: pod,
           slug: '/',
@@ -184,12 +191,57 @@ const useFairOs = () => {
       } else {
         podsWithHref.push({
           title: pod,
-          slug: `/pods/${pod.toLowerCase()}`,
+          slug: `/pods/${pod}`,
         });
       }
     });
 
     return podsWithHref;
+  };
+
+  const downloadFilePreview = async (
+    filename: string,
+    directory: string,
+    podName: string
+  ) => {
+    try {
+      let writePath = '';
+      if (directory === 'root') {
+        writePath = '/';
+      } else {
+        writePath = '/' + urlPath(directory) + '/';
+      }
+      const formData = new FormData();
+      formData.append('file_path', writePath + filename);
+      formData.append('pod_name', podName);
+      const downloadFile = await axios({
+        baseURL: host,
+        method: 'POST',
+        url: 'file/download',
+        data: formData,
+        responseType: 'blob',
+        withCredentials: true,
+      });
+      return downloadFile.data;
+    } catch (err) {
+      return err;
+    }
+  };
+  const downloadAllFiles = async (payload: DownloadFilesPayload) => {
+    const { files, directory, podName } = payload;
+    if (files !== null && files !== undefined) {
+      const res = Promise.all(
+        files.map(async (entry: any) => {
+          const url = window.URL.createObjectURL(
+            await downloadFilePreview(entry.name, urlPath(directory), podName)
+          );
+          return url;
+        })
+      );
+
+      return res;
+    }
+    return null;
   };
 
   return {
@@ -200,6 +252,8 @@ const useFairOs = () => {
     getPods,
     getPodsWithHref,
     openPod,
+    downloadFilePreview,
+    downloadAllFiles,
   };
 };
 
