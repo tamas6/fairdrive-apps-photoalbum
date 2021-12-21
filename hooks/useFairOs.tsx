@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-useless-catch */
-// import qs from 'qs';
 import axios from 'axios';
+import { PodDir } from 'contexts/Dirs';
 import { PodItem } from 'contexts/Pods';
-import urlPath from 'helpers/urlPath';
+import { PodFile } from 'contexts/Files';
 import useUser from 'hooks/useUser';
 import { Dispatch, SetStateAction, useState } from 'react';
 
@@ -30,7 +30,7 @@ export interface DownloadFilesPayload {
 }
 
 const useFairOs = () => {
-  const [aborList, setAborList] = useState([]);
+  const [abortList, setAbortList] = useState<AbortController[]>([]);
   const { user } = useUser();
 
   const login = async (payload: Payload) => {
@@ -51,7 +51,7 @@ const useFairOs = () => {
         withCredentials: true,
       });
 
-      // localStorage.removeItem('user');
+      localStorage.setItem('user', JSON.stringify({ username }));
 
       return response;
     } catch (error) {
@@ -136,7 +136,18 @@ const useFairOs = () => {
         withCredentials: true,
       });
 
-      return response;
+      const filteredResponse: { dirs: PodDir[]; files: PodFile[] } = {
+        dirs: response.data.dirs,
+        files: [],
+      };
+
+      // filter out non-images
+      response?.data?.files?.forEach((file: PodFile) => {
+        if (file.content_type.search('image/') !== -1)
+          filteredResponse.files.push(file);
+      });
+
+      return filteredResponse;
     } catch (error) {
       throw error;
     }
@@ -156,6 +167,11 @@ const useFairOs = () => {
   };
 
   const openPod = async (podName: string) => {
+    abortList.forEach((controller) => {
+      controller.abort();
+    });
+    setAbortList([]);
+
     try {
       const openPod = await axios({
         baseURL: host,
@@ -212,13 +228,17 @@ const useFairOs = () => {
     if (directory === 'root') {
       writePath = '/';
     } else {
-      writePath = '/' + urlPath(directory) + '/';
+      writePath = '/' + directory + '/';
     }
 
     const formData = new FormData();
 
-    formData.append('file_path', writePath + filename);
     formData.append('pod_name', podName);
+    formData.append('file_path', writePath + filename);
+
+    setAbortList((list) => {
+      return [...list, controller];
+    });
 
     try {
       const downloadFile = await axios.post(host + 'file/download', formData, {
@@ -226,10 +246,6 @@ const useFairOs = () => {
         responseType: 'blob',
         withCredentials: true,
         signal: controller.signal,
-      });
-
-      setAborList((list) => {
-        return [...list, controller];
       });
 
       return downloadFile.data;
@@ -243,22 +259,17 @@ const useFairOs = () => {
     setFiles: Dispatch<SetStateAction<string[]>>,
     callback: () => void
   ) => {
-    aborList.forEach((controller) => {
-      controller.abort();
-    });
-    setAborList([]);
-
     const { files, directory, podName } = payload;
 
     if (files !== null && files !== undefined) {
       files.map(async (entry: any) => {
         const url = window.URL.createObjectURL(
-          await downloadFilePreview(entry.name, urlPath(directory), podName)
+          await downloadFilePreview(entry.name, directory, podName)
         );
 
         // Incremental loading
-        setFiles((files) => {
-          return [...files, url];
+        setFiles((list) => {
+          return [...list, url];
         });
       });
 

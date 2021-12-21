@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react-hooks/exhaustive-deps */
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -15,30 +14,37 @@ import useFairOs from 'hooks/useFairOs';
 import ImageGrid from 'components/ImageGrid';
 import Spinner from 'components/Spinner';
 import useFiles from 'hooks/useFiles';
+import useDirs from 'hooks/useDirs';
+import DirsGrid from 'components/DirsGrid';
 
 const Home: NextPage = () => {
   const { files, setFiles } = useFiles();
+  const { dirs, setDirs } = useDirs();
   const { openPod, getDirectory, downloadAllFiles } = useFairOs();
   const [isPodLoading, setIsPodLoading] = useState(false);
   const router = useRouter();
   const { slug = '/' } = router.query;
   const { user, isAuthenticated } = useUser();
 
+  const podName: string = slug[0] === '/' ? 'Home' : slug[0];
+  const directory: string = !slug[1] ? 'root' : slug[1];
+
   const getPod = async () => {
     setIsPodLoading(true);
+    setDirs([]);
     setFiles([]);
-
-    const podName: string = slug === '/' ? 'Home' : slug[0];
 
     await openPod(podName);
 
-    const { data } = await getDirectory({ podName, directory: 'root' });
+    const { files, dirs } = await getDirectory({ podName, directory });
+
+    setDirs(dirs);
 
     downloadAllFiles(
       {
         podName,
-        directory: 'root',
-        files: data.files,
+        directory,
+        files: files,
       },
       setFiles,
       () => setIsPodLoading(false)
@@ -87,6 +93,10 @@ const Home: NextPage = () => {
             <Spinner />
           </div>
         )}
+
+        <div className="w-full">
+          <DirsGrid pod={podName} dirs={dirs} />
+        </div>
 
         <div className="w-full">
           <ImageGrid images={files} />

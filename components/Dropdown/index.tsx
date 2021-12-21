@@ -50,7 +50,10 @@ const Dropdown = ({
               <li key={`${ix}${option.title}`}>
                 {option.slug ? (
                   <Link href={option.slug}>
-                    <a className="block py-1 px-6 hover:bg-indigo-300">
+                    <a
+                      className="block py-1 px-6 hover:bg-indigo-300"
+                      onClick={() => setShow(false)}
+                    >
                       {option.title}
                     </a>
                   </Link>

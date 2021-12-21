@@ -1,22 +1,24 @@
 import classes from './ImageGrid.module.scss';
 
-interface ImageGridProps {
+interface Props {
   images: string[];
   className?: string;
 }
-const ImageGrid = ({ images }: ImageGridProps) => {
+
+const ImageGrid = ({ images }: Props) => {
   return (
     <div className={classes.content}>
       <div className="flex flex-wrap">
-        {images &&
-          images.map((file, key: any) => (
-            <img
-              className={classes.imageGridItem}
-              src={file}
-              key={key + file}
-              alt={key}
-            />
-          ))}
+        {images && !!images.length
+          ? images.map((file, key: number) => (
+              <img
+                className={classes.imageGridItem}
+                src={file}
+                key={String(key) + file}
+                alt={String(key)}
+              />
+            ))
+          : 'No photos'}
       </div>
     </div>
   );
