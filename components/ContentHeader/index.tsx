@@ -17,7 +17,9 @@ const ContentHeader = () => {
         <Dropdown style="outset" options={pods}>
           <FolderIcon />
         </Dropdown>
-        <span className="text-xl font-semibold text-purple">{slug}</span>
+        <span className="text-xl font-semibold text-purple">
+          {slug[0]} {slug[1] && `/ ${slug[1]}`}
+        </span>
       </div>
 
       <div className="flex items-center">
