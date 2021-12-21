@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-useless-catch */
-// import qs from 'qs';
 import axios from 'axios';
+import { PodDir } from 'contexts/Dirs';
 import { PodItem } from 'contexts/Pods';
+import { PodFile } from 'contexts/Files';
 import useUser from 'hooks/useUser';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 interface Payload {
   username?: string;
@@ -20,7 +23,14 @@ const host = process.env.NEXT_PUBLIC_FAIROSHOST;
 
 const podNameDefault = 'Home';
 
+export interface DownloadFilesPayload {
+  podName: string;
+  directory: string;
+  files: any;
+}
+
 const useFairOs = () => {
+  const [abortList, setAbortList] = useState<AbortController[]>([]);
   const { user } = useUser();
 
   const login = async (payload: Payload) => {
@@ -126,7 +136,18 @@ const useFairOs = () => {
         withCredentials: true,
       });
 
-      return response;
+      const filteredResponse: { dirs: PodDir[]; files: PodFile[] } = {
+        dirs: response.data.dirs,
+        files: [],
+      };
+
+      // filter out non-images
+      response?.data?.files?.forEach((file: PodFile) => {
+        if (file.content_type.search('image/') !== -1)
+          filteredResponse.files.push(file);
+      });
+
+      return filteredResponse;
     } catch (error) {
       throw error;
     }
@@ -142,11 +163,15 @@ const useFairOs = () => {
       },
       withCredentials: true,
     });
-
     return response;
   };
 
   const openPod = async (podName: string) => {
+    abortList.forEach((controller) => {
+      controller.abort();
+    });
+    setAbortList([]);
+
     try {
       const openPod = await axios({
         baseURL: host,
@@ -176,7 +201,7 @@ const useFairOs = () => {
     const podsWithHref: PodItem[] = [];
 
     data.pod_name.forEach((pod: string) => {
-      if (pod.toLowerCase() === 'home') {
+      if (pod === 'Home') {
         podsWithHref.push({
           title: pod,
           slug: '/',
@@ -184,12 +209,76 @@ const useFairOs = () => {
       } else {
         podsWithHref.push({
           title: pod,
-          slug: `/pods/${pod.toLowerCase()}`,
+          slug: `/pods/${pod}`,
         });
       }
     });
 
     return podsWithHref;
+  };
+
+  const downloadFilePreview = async (
+    filename: string,
+    directory: string,
+    podName: string
+  ) => {
+    const controller = new AbortController();
+    let writePath = '';
+
+    if (directory === 'root') {
+      writePath = '/';
+    } else {
+      writePath = '/' + directory + '/';
+    }
+
+    const formData = new FormData();
+
+    formData.append('pod_name', podName);
+    formData.append('file_path', writePath + filename);
+
+    setAbortList((list) => {
+      return [...list, controller];
+    });
+
+    try {
+      const downloadFile = await axios.post(host + 'file/download', formData, {
+        data: formData,
+        responseType: 'blob',
+        withCredentials: true,
+        signal: controller.signal,
+      });
+
+      return downloadFile.data;
+    } catch (err) {
+      return err;
+    }
+  };
+
+  const downloadAllFiles = (
+    payload: DownloadFilesPayload,
+    setFiles: Dispatch<SetStateAction<string[]>>,
+    callback: () => void
+  ) => {
+    const { files, directory, podName } = payload;
+
+    if (files !== null && files !== undefined) {
+      files.map(async (entry: any) => {
+        const url = window.URL.createObjectURL(
+          await downloadFilePreview(entry.name, directory, podName)
+        );
+
+        // Incremental loading
+        setFiles((list) => {
+          return [...list, url];
+        });
+      });
+
+      callback && callback();
+
+      return files;
+    }
+
+    return null;
   };
 
   return {
@@ -200,6 +289,8 @@ const useFairOs = () => {
     getPods,
     getPodsWithHref,
     openPod,
+    downloadFilePreview,
+    downloadAllFiles,
   };
 };
 

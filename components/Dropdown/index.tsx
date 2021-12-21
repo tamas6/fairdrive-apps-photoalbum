@@ -6,7 +6,7 @@ import useOnClickOutside from 'use-onclickoutside';
 
 export interface DropdownItem {
   title: string;
-  href?: string;
+  slug?: string;
 }
 
 type Props = {
@@ -44,13 +44,16 @@ const Dropdown = ({
         {children}
       </Button>
       {show && (
-        <div className="absolute top-full left-0 right-0 min-w-min whitespace-nowrap mt-1 py-3 bg-white rounded-md border-blue border">
+        <div className="z-10 absolute top-full left-0 right-0 min-w-min whitespace-nowrap mt-1 py-3 bg-white rounded-md border-blue border">
           <ul>
             {options.map((option: DropdownItem, ix: number) => (
               <li key={`${ix}${option.title}`}>
-                {option.href ? (
-                  <Link href={option.href}>
-                    <a className="block py-1 px-6 hover:bg-indigo-300">
+                {option.slug ? (
+                  <Link href={option.slug}>
+                    <a
+                      className="block py-1 px-6 hover:bg-indigo-300"
+                      onClick={() => setShow(false)}
+                    >
                       {option.title}
                     </a>
                   </Link>

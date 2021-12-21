@@ -11,21 +11,44 @@ import AlertIcon from 'assets/icons/alert.svg';
 import PlusIcon from 'assets/icons/plus.svg';
 import Button from 'components/Button';
 import useFairOs from 'hooks/useFairOs';
+import ImageGrid from 'components/ImageGrid';
+import Spinner from 'components/Spinner';
+import useFiles from 'hooks/useFiles';
+import useDirs from 'hooks/useDirs';
+import DirsGrid from 'components/DirsGrid';
 
 const Home: NextPage = () => {
-  const { openPod, getDirectory } = useFairOs();
-  const [files, setFiles] = useState(null);
+  const { files, setFiles } = useFiles();
+  const { dirs, setDirs } = useDirs();
+  const { openPod, getDirectory, downloadAllFiles } = useFairOs();
+  const [isPodLoading, setIsPodLoading] = useState(false);
   const router = useRouter();
   const { slug = '/' } = router.query;
   const { user, isAuthenticated } = useUser();
 
+  const podName: string = slug[0] === '/' ? 'Home' : slug[0];
+  const directory: string = !slug[1] ? 'root' : slug[1];
+
   const getPod = async () => {
-    const podName: string = slug === '/' ? 'Home' : slug[0];
+    setIsPodLoading(true);
+    setDirs([]);
+    setFiles([]);
+
     await openPod(podName);
 
-    const { data } = await getDirectory({ podName, directory: 'root' });
+    const { files, dirs } = await getDirectory({ podName, directory });
 
-    setFiles(data.files);
+    setDirs(dirs);
+
+    downloadAllFiles(
+      {
+        podName,
+        directory,
+        files: files,
+      },
+      setFiles,
+      () => setIsPodLoading(false)
+    );
   };
 
   useEffect(() => {
@@ -38,7 +61,7 @@ const Home: NextPage = () => {
     if (user && user.password) {
       getPod();
     }
-  }, [user]);
+  }, [user, slug]);
 
   return (
     isAuthenticated && (
@@ -65,7 +88,19 @@ const Home: NextPage = () => {
           </div>
         </div>
 
-        {JSON.stringify(files)}
+        {isPodLoading && (
+          <div className="my-8">
+            <Spinner />
+          </div>
+        )}
+
+        <div className="w-full">
+          <DirsGrid pod={podName} dirs={dirs} />
+        </div>
+
+        <div className="w-full">
+          <ImageGrid images={files} />
+        </div>
       </Layout>
     )
   );

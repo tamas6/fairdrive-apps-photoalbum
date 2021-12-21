@@ -4,9 +4,12 @@ import HamburgerIcon from 'assets/icons/hamburger.svg';
 import UnionIcon from 'assets/icons/union.svg';
 import Dropdown from 'components/Dropdown';
 import usePods from 'hooks/usePods';
+import { useRouter } from 'next/router';
 
 const ContentHeader = () => {
   const { pods } = usePods();
+  const router = useRouter();
+  const { slug = '/' } = router.query;
 
   return (
     <div className="my-6 flex justify-between">
@@ -15,7 +18,7 @@ const ContentHeader = () => {
           <FolderIcon />
         </Dropdown>
         <span className="text-xl font-semibold text-purple">
-          Pod 2 / Folder 111
+          {slug[0]} {slug[1] && `/ ${slug[1]}`}
         </span>
       </div>
 

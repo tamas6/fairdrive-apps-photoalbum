@@ -1,5 +1,15 @@
 .root {
-  // display: flex;
+  @apply absolute;
+  @apply left-0;
+  @apply top-0;
+  @apply z-0;
+  @apply w-48;
+  @apply lg:w-72;
+  @apply px-6;
+  @apply py-20;
+  @apply bg-white;
+  @apply shadow-xl;
+  @apply min-h-full;
 }
 
 .list {

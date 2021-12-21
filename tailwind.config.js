@@ -1,11 +1,11 @@
 module.exports = {
-  content: [
-    // Example content paths...
-    './public/**/*.html',
-    './**/*.{ts,tsx}',
-  ],
+  content: ['./public/**/*.html', './**/*.{ts,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        'spin-slow': 'spin 3s linear infinite',
+      },
+    },
   },
   plugins: [require('@tailwindcss/aspect-ratio')],
 };

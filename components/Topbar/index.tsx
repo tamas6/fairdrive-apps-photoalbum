@@ -14,7 +14,7 @@ const Topbar = () => {
 
   return (
     <header
-      className={`fixed flex top-0 left-0 right-0 z-10 h-20 bg-gray ${classes.root}`}
+      className={`fixed flex top-0 left-0 right-0 z-10 h-20 bg-blue ${classes.root}`}
     >
       <div className="w-72 pl-5">
         <Link href="/">
