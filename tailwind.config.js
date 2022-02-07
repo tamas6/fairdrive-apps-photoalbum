@@ -15,6 +15,9 @@ module.exports = {
         'dark-purple': ' 0px 0px 15px 0px #7D6BECC4',
         'dark-active': '0px 4px 4px 0px #362F68',
         'light-active': '0px 0px 5px 0px #5C568540',
+        'pod-item': '0px 0px 18px rgba(92, 86, 133, 0.18)',
+        'active-pod-item':
+          '0px 0px 30px rgba(92, 86, 133, 0.3), inset -4px 0px 0px #434D7E',
       },
       backgroundImage: {
         'auth-light': "url('/media/authentication/authentication-light.svg')",
