@@ -63,6 +63,12 @@ module.exports = {
       'color-status-positive-night': '#7fc18a',
       'color-status-components-day': '#7b61ff',
       'color-status-components-night': '#7b61ff',
+      white: 'hsla(0, 0%, 100%, 1)',
+      'button-blue': 'hsla(223, 61%, 93%, 1)',
+      grey: 'hsla(224, 23%, 91%, 1)',
+      'main-purple': 'hsla(230, 31%, 38%, 1)',
+      'alert-red': 'hsla(347, 100%, 61%, 1)',
+      'alert-green': 'hsla(119, 82%, 36%, 1)',
     },
   },
   variants: {
