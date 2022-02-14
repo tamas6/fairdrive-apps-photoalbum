@@ -18,7 +18,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
           <PodSideBar />
         </div>
 
-        <div className="w-full pt-10 overflow-scroll no-scroll-bar">
+        <div className="w-full pt-10 px-10 overflow-scroll no-scroll-bar">
           {children}
         </div>
       </div>
