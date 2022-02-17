@@ -12,8 +12,15 @@ import PodItem from '@components/NavigationBars/PodSideBar/PodItem/PodItem';
 import sortAlphabetically from 'src/utils/sortAlphabetically';
 
 const DriveSideBar: FC = () => {
-  const { pods, setPods, activePod, setActivePod, openPods, setOpenPods } =
-    useContext(PodContext);
+  const {
+    pods,
+    setPods,
+    activePod,
+    setActivePod,
+    openPods,
+    setOpenPods,
+    setDirectoryName,
+  } = useContext(PodContext);
   const { password } = useContext(UserContext);
 
   useEffect(() => {
@@ -40,6 +47,7 @@ const DriveSideBar: FC = () => {
     }
 
     setActivePod(podName);
+    setDirectoryName('root');
   };
 
   return (

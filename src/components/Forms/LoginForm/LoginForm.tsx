@@ -3,7 +3,7 @@ import router from 'next/router';
 import { useForm } from 'react-hook-form';
 
 import UserContext from '@context/UserContext';
-// import PodContext from '@context/PodContext';
+import PodContext from '@context/PodContext';
 
 import { login, userStats } from '@api/authentication';
 
@@ -17,7 +17,7 @@ const LoginForm: FC = () => {
   const { errors } = formState;
 
   const { setUser, setPassword, setAddress } = useContext(UserContext);
-  // const { clearPodContext } = useContext(PodContext);
+  const { clearPodContext } = useContext(PodContext);
 
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -30,7 +30,7 @@ const LoginForm: FC = () => {
         userStats()
           .then((res) => {
             setAddress(res.data.reference);
-            // clearPodContext();
+            clearPodContext();
             router.push('/gallery');
           })
           .catch(() => {

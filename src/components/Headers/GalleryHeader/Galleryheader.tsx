@@ -17,8 +17,7 @@ const GalleryHeader: FC = () => {
         <InfoIcon className="mr-2" />
 
         <span className="text-xs text-main-purple">
-          Content that is in this pod includes content you have shared and not
-          shared
+          Content that is in this pod does not include any shared content
         </span>
       </div>
     </div>
