@@ -9,7 +9,7 @@ import { FileResponse } from '@api/files';
 
 import { MainLayout } from '@components/Layouts';
 import { MainHeader, GalleryHeader } from '@components/Headers';
-import { GalleryGridView } from '@components/Views';
+import { GalleryGridView, GalleryListView } from '@components/Views';
 import { EmptyDirectoryCard } from '@components/Cards';
 
 import SearchResultsIcon from '@media/UI/search-results.svg';
@@ -141,7 +141,16 @@ const Gallery: FC = () => {
             />
           ) : null}
 
-          {galleryView === 'list' ? null : null}
+          {galleryView === 'list' ? (
+            <GalleryListView
+              folders={handleSort(folders?.filter(handleSearchFilter))}
+              images={handleSort(
+                images?.filter(handleFilterImages).filter(handleSearchFilter)
+              )}
+              folderOnClick={handleFolderOnClick}
+              imageOnClick={handleImageOnClick}
+            />
+          ) : null}
         </div>
       ) : (
         <EmptyDirectoryCard />
