@@ -8,6 +8,7 @@ export interface PodFilesResponse {
   files: string[];
   dirs: string;
 }
+
 export async function getPods(): Promise<GetPodResponse> {
   return (await axios.get('pod/ls')).data;
 }
@@ -21,12 +22,7 @@ export async function openPod(
     password,
   });
 }
-export async function createPod(pod_name: string, password: string) {
-  return await axios.post('pod/new', {
-    pod_name,
-    password,
-  });
-}
+
 export async function receivePod(podReference: string) {
   return await axios.get(
     `pod/receive?sharing_ref=${podReference}&ref=${podReference}`
@@ -50,6 +46,7 @@ export async function getFilesAndDirectories(
       pod_name: pod_name,
     };
   }
+
   const response = (
     await axios({
       baseURL: process.env.NEXT_PUBLIC_FAIROSHOST,
@@ -62,5 +59,6 @@ export async function getFilesAndDirectories(
       withCredentials: true,
     })
   ).data;
+
   return response;
 }
