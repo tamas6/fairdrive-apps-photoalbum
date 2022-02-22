@@ -63,10 +63,10 @@ const FolderCard: FC<FolderCardProps> = ({ data, onClick }) => {
         <img
           src={imageSource}
           alt={data.name}
-          className="block w-80 h-72 rounded-lg"
+          className="block w-80 h-72 rounded-lg hover:shadow-2xl"
         />
       ) : (
-        <div className="flex justify-center items-center w-80 h-72 bg-button-blue rounded-lg">
+        <div className="flex justify-center items-center w-80 h-72 bg-button-blue rounded-lg hover:shadow-2xl">
           <NoImageIcon />
         </div>
       )}

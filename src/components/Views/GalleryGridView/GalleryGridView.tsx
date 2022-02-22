@@ -29,7 +29,7 @@ const GalleryGridView: FC<GalleryGridViewProps> = ({
         ))}
       </div>
 
-      <div className="flex flex-wrap mt-8 pb-40">
+      <div className="flex flex-wrap mt-5 pb-24">
         {images?.map((image) => (
           <ImageCard
             key={image.name}

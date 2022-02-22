@@ -40,7 +40,7 @@ const DriveListView: FC<DriveListViewProps> = ({
   };
 
   return (
-    <div className="h-full">
+    <div className="w-full h-full mb-40">
       <table className="w-full h-auto table-auto shadow">
         <GalleryTableHeader />
 

@@ -13,6 +13,7 @@ import { GalleryGridView, GalleryListView } from '@components/Views';
 import { EmptyDirectoryCard } from '@components/Cards';
 
 import SearchResultsIcon from '@media/UI/search-results.svg';
+import Lightbox from '@components/Lightbox/Lightbox';
 
 const Gallery: FC = () => {
   const { activePod, openPods, directoryName, setDirectoryName } =
@@ -24,6 +25,9 @@ const Gallery: FC = () => {
 
   const [galleryView, setGalleryView] = useState<'grid' | 'list'>('grid');
   const [gallerySort, setGallerySort] = useState('a-z');
+
+  const [showLightbox, setShowLightbox] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState(null);
 
   const [loading, setLoading] = useState(false);
 
@@ -72,7 +76,7 @@ const Gallery: FC = () => {
   };
 
   const handleFilterImages = (image: FileResponse) => {
-    const imageTypes = ['png', 'jpg', 'jpeg', 'gif'];
+    const imageTypes = ['png', 'jpg', 'jpeg', 'gif', 'svg'];
 
     const imageExtension = image.name.split('.').pop();
 
@@ -101,8 +105,9 @@ const Gallery: FC = () => {
     }
   };
 
-  const handleImageOnClick = () => {
-    console.log('TODO: Show image in lightbox slider.');
+  const handleImageOnClick = (image: FileResponse) => {
+    setLightboxImage(image);
+    setShowLightbox(true);
   };
 
   return (
@@ -155,6 +160,14 @@ const Gallery: FC = () => {
       ) : (
         <EmptyDirectoryCard />
       )}
+
+      {showLightbox ? (
+        <Lightbox
+          showLightbox={showLightbox}
+          closeLightbox={() => setShowLightbox(false)}
+          image={lightboxImage}
+        />
+      ) : null}
     </MainLayout>
   );
 };

@@ -27,9 +27,13 @@ const ImageCard: FC<ImageCardProps> = ({ data, onClick }) => {
   }, []);
 
   return (
-    <div className="w-auto h-44 mx-2 mb-5 cursor-pointer" onClick={onClick}>
+    <div className="w-auto h-40 cursor-pointer" onClick={onClick}>
       {imageSource ? (
-        <img src={imageSource} alt={data.name} className="block w-80 h-72" />
+        <img
+          src={imageSource}
+          alt={data.name}
+          className="block w-auto h-40 border-4 border-white hover:border-main-purple"
+        />
       ) : null}
     </div>
   );
