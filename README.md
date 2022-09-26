@@ -18,6 +18,8 @@ Fairdrive works very similar to Google Drive or Dropbox, yet with some big diffe
 - The user gets the revenue of their data
 
 ## Development
+Devnet deployment: https://app.fairdrive.dev.fairdatasociety.org/ 
+Mainnet deployment: https://app.fairdrive.fairdatasociety.org/ 
 
 Demo: http://fairdrive.fairdatasociety.org/
 
