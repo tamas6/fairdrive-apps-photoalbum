@@ -18,8 +18,9 @@ Fairdrive works very similar to Google Drive or Dropbox, yet with some big diffe
 - The user gets the revenue of their data
 
 ## Development
-Devnet deployment: https://app.fairdrive.dev.fairdatasociety.org/ 
-Mainnet deployment: https://app.fairdrive.fairdatasociety.org/ 
+
+Devnet deployment: https://app.fairdrive.dev.fairdatasociety.org/
+Mainnet deployment: https://app.fairdrive.fairdatasociety.org/
 
 Demo: http://fairdrive.fairdatasociety.org/
 
@@ -46,3 +47,9 @@ If this process takes some time - which it may - please run "docker compose up" 
 Wait for bee to deploy chequebook and this message appears "fairos_1 | time="2021-07-10T19:30:11Z" level=info msg="fairOS-dfs API server listening on port: 9090""
 
 Open http://localhost:9090 in your browser and you can see a few lines with information about FairOS. These lines will appear only after chequebook deployment.
+
+## Devops
+
+```
+NEXT_PUBLIC_FAIROSHOST=https://fairdrive.dev.fairdatasociety.org/
+```
