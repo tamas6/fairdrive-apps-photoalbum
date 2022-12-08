@@ -15,7 +15,7 @@ export async function login(data: LoginData): Promise<LoginResponse> {
 }
 
 export async function logout(): Promise<LoginResponse> {
-  return axios.post('v2/user/logout');
+  return axios.post('v1/user/logout');
 }
 
 export const userStats = async () => {
