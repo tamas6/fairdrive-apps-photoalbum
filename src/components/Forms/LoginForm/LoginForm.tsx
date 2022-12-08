@@ -21,10 +21,10 @@ const LoginForm: FC = () => {
 
   const [errorMessage, setErrorMessage] = useState('');
 
-  const onSubmit = (data: { user_name: string; password: string }) => {
+  const onSubmit = (data: { userName: string; password: string }) => {
     login(data)
       .then(() => {
-        setUser(data.user_name);
+        setUser(data.userName);
         setPassword(data.password);
 
         userStats()
@@ -33,13 +33,13 @@ const LoginForm: FC = () => {
             clearPodContext();
             router.push('/gallery');
           })
-          .catch(() => {
+          .catch((error) => {
             setErrorMessage(
               'Login failed. Incorrect user credentials, please try again.'
             );
           });
       })
-      .catch(() => {
+      .catch((error) => {
         setErrorMessage(
           'Login failed. Incorrect user credentials, please try again.'
         );
@@ -61,15 +61,15 @@ const LoginForm: FC = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="w-full">
           <AuthenticationInput
             label="username"
-            id="user_name"
+            id="userName"
             type="text"
-            name="user_name"
+            name="userName"
             placeholder="Type here"
             useFormRegister={register}
             validationRules={{
               required: true,
             }}
-            error={errors.user_name}
+            error={errors.userName}
             errorMessage="Username or e-mail is required"
           />
 

@@ -1,7 +1,7 @@
 import axios from '@api/customAxios';
 
 interface LoginData {
-  user_name: string;
+  userName: string;
   password: string;
 }
 

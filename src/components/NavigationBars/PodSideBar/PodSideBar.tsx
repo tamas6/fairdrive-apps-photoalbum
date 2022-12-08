@@ -57,7 +57,7 @@ const DriveSideBar: FC = () => {
       </h2>
 
       <div className="mt-5 mb-16 text-center shadow-pod-item">
-        {sortAlphabetically(pods?.pod_name).map((pod: string) => (
+        {sortAlphabetically(pods?.pods).map((pod: string) => (
           <PodItem
             key={pod}
             podName={pod}
