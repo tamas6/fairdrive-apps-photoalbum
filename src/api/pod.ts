@@ -1,7 +1,7 @@
 import axios from '@api/customAxios';
 export interface GetPodResponse {
   pods: string[];
-  sharedPodName: string[];
+  sharedPods: string[];
 }
 
 export interface PodFilesResponse {

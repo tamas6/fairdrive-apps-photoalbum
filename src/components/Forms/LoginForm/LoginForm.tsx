@@ -1,6 +1,6 @@
 import { FC, useContext, useState } from 'react';
 import router from 'next/router';
-import { useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 
 import UserContext from '@context/UserContext';
 import PodContext from '@context/PodContext';
@@ -69,7 +69,7 @@ const LoginForm: FC = () => {
             validationRules={{
               required: true,
             }}
-            error={errors.userName}
+            error={errors.userName as FieldError}
             errorMessage="Username or e-mail is required"
           />
 
