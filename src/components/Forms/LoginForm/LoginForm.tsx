@@ -83,7 +83,7 @@ const LoginForm: FC = () => {
             validationRules={{
               required: true,
             }}
-            error={errors.password}
+            error={errors.password as FieldError}
             errorMessage="Password is required"
           />
 
