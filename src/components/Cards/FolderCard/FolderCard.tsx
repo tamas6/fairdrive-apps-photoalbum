@@ -13,7 +13,7 @@ import NoImageIcon from '@media/UI/no-image.svg';
 interface FolderCardProps {
   data: {
     name: string;
-    creation_time: string;
+    creationTime: string;
   };
   onClick: () => void;
 }
@@ -76,7 +76,7 @@ const FolderCard: FC<FolderCardProps> = ({ data, onClick }) => {
           {shortenString(data.name, 24)}
         </span>
         <span className="block font-normal text-xs text-main-purple">
-          {formatDate(data?.creation_time, false)}
+          {formatDate(data?.creationTime, false)}
         </span>
       </div>
     </div>

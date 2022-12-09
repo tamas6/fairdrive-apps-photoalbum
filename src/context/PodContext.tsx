@@ -20,7 +20,7 @@ interface PodContextProps {
 }
 
 const podContextDefaultValues: PodContext = {
-  pods: { pod_name: [], shared_pod_name: [] },
+  pods: { pods: [], sharedPods: [] },
   setPods: (pods: GetPodResponse) => {},
   activePod: '',
   setActivePod: (pod: string) => {},

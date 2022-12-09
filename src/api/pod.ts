@@ -1,7 +1,7 @@
 import axios from '@api/customAxios';
 export interface GetPodResponse {
-  pod_name: string[];
-  shared_pod_name: string[];
+  pods: string[];
+  sharedPods: string[];
 }
 
 export interface PodFilesResponse {
@@ -14,11 +14,11 @@ export async function getPods(): Promise<GetPodResponse> {
 }
 
 export async function openPod(
-  pod_name: string,
+  podName: string,
   password: string
 ): Promise<void> {
   return await axios.post('v1/pod/open', {
-    pod_name,
+    podName,
     password,
   });
 }
@@ -30,20 +30,20 @@ export async function receivePod(podReference: string) {
 }
 
 export async function getFilesAndDirectories(
-  pod_name: string,
+  podName: string,
   directory: string
 ): Promise<PodFilesResponse> {
-  let data = { dir_path: '', pod_name: pod_name };
+  let data = { dirPath: '', podName };
 
   if (directory === 'root') {
     data = {
-      dir_path: '/',
-      pod_name: pod_name,
+      dirPath: '/',
+      podName,
     };
   } else {
     data = {
-      dir_path: '/' + directory,
-      pod_name: pod_name,
+      dirPath: '/' + directory,
+      podName,
     };
   }
 
@@ -51,7 +51,7 @@ export async function getFilesAndDirectories(
     await axios({
       baseURL: process.env.NEXT_PUBLIC_FAIROSHOST,
       method: 'GET',
-      url: 'dir/ls',
+      url: 'v1/dir/ls',
       params: data,
       headers: {
         'Content-Type': 'application/json',
