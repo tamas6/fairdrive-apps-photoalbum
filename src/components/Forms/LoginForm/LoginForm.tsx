@@ -11,6 +11,7 @@ import { AuthenticationHeader } from '@components/Headers';
 import { AuthenticationInput } from '@components/Inputs';
 import { Button } from '@components/Buttons';
 import FeedbackMessage from '@components/FeedbackMessage/FeedbackMessage';
+import Disclaimer from '@components/Disclaimer/Disclaimer';
 
 const LoginForm: FC = () => {
   const { register, handleSubmit, formState } = useForm();
@@ -52,6 +53,8 @@ const LoginForm: FC = () => {
         title="Welcome back"
         content="Please log in to get access to your photos."
       />
+
+      <Disclaimer />
 
       <div className="w-98 mt-8">
         <div className="mb-5 text-center">
