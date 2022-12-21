@@ -1,6 +1,6 @@
 import { FC, useContext, useState } from 'react';
 import router from 'next/router';
-import { useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 
 import UserContext from '@context/UserContext';
 import PodContext from '@context/PodContext';
@@ -11,6 +11,7 @@ import { AuthenticationHeader } from '@components/Headers';
 import { AuthenticationInput } from '@components/Inputs';
 import { Button } from '@components/Buttons';
 import FeedbackMessage from '@components/FeedbackMessage/FeedbackMessage';
+import Disclaimer from '@components/Disclaimer/Disclaimer';
 
 const LoginForm: FC = () => {
   const { register, handleSubmit, formState } = useForm();
@@ -21,10 +22,10 @@ const LoginForm: FC = () => {
 
   const [errorMessage, setErrorMessage] = useState('');
 
-  const onSubmit = (data: { user_name: string; password: string }) => {
+  const onSubmit = (data: { userName: string; password: string }) => {
     login(data)
       .then(() => {
-        setUser(data.user_name);
+        setUser(data.userName);
         setPassword(data.password);
 
         userStats()
@@ -33,13 +34,13 @@ const LoginForm: FC = () => {
             clearPodContext();
             router.push('/gallery');
           })
-          .catch(() => {
+          .catch((error) => {
             setErrorMessage(
               'Login failed. Incorrect user credentials, please try again.'
             );
           });
       })
-      .catch(() => {
+      .catch((error) => {
         setErrorMessage(
           'Login failed. Incorrect user credentials, please try again.'
         );
@@ -53,6 +54,8 @@ const LoginForm: FC = () => {
         content="Please log in to get access to your photos."
       />
 
+      <Disclaimer />
+
       <div className="w-98 mt-8">
         <div className="mb-5 text-center">
           <FeedbackMessage type="error" message={errorMessage} />
@@ -61,15 +64,15 @@ const LoginForm: FC = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="w-full">
           <AuthenticationInput
             label="username"
-            id="user_name"
+            id="userName"
             type="text"
-            name="user_name"
+            name="userName"
             placeholder="Type here"
             useFormRegister={register}
             validationRules={{
               required: true,
             }}
-            error={errors.user_name}
+            error={errors.userName as FieldError}
             errorMessage="Username or e-mail is required"
           />
 
@@ -83,7 +86,7 @@ const LoginForm: FC = () => {
             validationRules={{
               required: true,
             }}
-            error={errors.password}
+            error={errors.password as FieldError}
             errorMessage="Password is required"
           />
 
@@ -93,7 +96,7 @@ const LoginForm: FC = () => {
 
           <div className="my-6 text-center">
             <a
-              href="https://fairdrive.vercel.app/register"
+              href="https://create.dev.fairdatasociety.org/#/register"
               target="_blank"
               rel="noreferrer"
               className="font-normal text-xs text-color-accents-purple-black"
