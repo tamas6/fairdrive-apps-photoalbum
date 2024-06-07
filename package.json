@@ -20,9 +20,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "18": "^0.0.0",
     "@datapunt/matomo-tracker-react": "^0.5.1",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
+    "@fairdatasociety/blossom": "^0.5.0",
+    "@fairdatasociety/fdp-storage": "^0.19.0",
     "@types/react-blockies": "^1.4.1",
     "axios": "^0.21.1",
     "ethers": "^5.5.2",
@@ -30,7 +33,7 @@
     "moment": "^2.29.1",
     "next": "^12.3.2",
     "pretty-bytes": "^6.0.0",
-    "react": "^17.0.2",
+    "react": "^18.3.1",
     "react-blockies": "^1.4.1",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.22.0"
