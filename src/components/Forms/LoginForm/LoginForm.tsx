@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { FieldError, useForm } from 'react-hook-form';
 import UserContext from '@context/UserContext';
 import PodContext from '@context/PodContext';
+import { useLocales } from '@context/LocalesContext';
 
 import { AuthenticationHeader } from '@components/Headers';
 import { AuthenticationInput } from '@components/Inputs';
@@ -11,6 +12,7 @@ import FeedbackMessage from '@components/FeedbackMessage/FeedbackMessage';
 import Disclaimer from '@components/Disclaimer/Disclaimer';
 import NetworkDropdown from '@components/Dropdowns/NetworkDropdown/NetworkDropdown';
 import CustomCheckbox from '@components/Inputs/Checkbox/Checkbox';
+import { Network } from '@data/networks';
 import { getDefaultNetwork, useFdpStorage } from '@context/FdpStorageContext';
 import { setDefaultNetwork } from '@utils/localStorage';
 import { useMatomoContext } from '@context/Matomo';
@@ -43,6 +45,8 @@ const LoginForm: FC = () => {
   const { setEnabled } = useMatomoContext();
 
   const router = useRouter();
+  const { intl } = useLocales();
+  const fdsLoginEnabled = router?.query['fdsLogin'] === 'true';
 
   const [allowTracking, setAllowTracking] = useState(getDefaultTrackingValue());
   const [network, setNetwork] = useState(getDefaultNetwork());

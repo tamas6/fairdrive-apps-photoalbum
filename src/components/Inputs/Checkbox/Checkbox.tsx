@@ -12,6 +12,7 @@ interface CheckboxProps {
   label: string;
   onChange: any;
   defaultValue?: boolean;
+  className?: string;
 }
 
 const Checkbox: FC<CheckboxProps> = ({

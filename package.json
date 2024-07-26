@@ -20,7 +20,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "18": "^0.0.0",
     "@datapunt/matomo-tracker-react": "^0.5.1",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
@@ -33,7 +32,7 @@
     "moment": "^2.29.1",
     "next": "^12.3.2",
     "pretty-bytes": "^6.0.0",
-    "react": "^18.3.1",
+    "react": "^16.8.0",
     "react-blockies": "^1.4.1",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.22.0"

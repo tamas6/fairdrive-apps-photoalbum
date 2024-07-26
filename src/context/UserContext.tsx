@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { FC, ReactNode, createContext, useState } from 'react';
+import { useFdpStorage } from './FdpStorageContext';
 
 interface UserContext {
   user: string;
   setUser: (user: string) => void;
   password: string;
   setPassword: (user: string) => void;
+  errorMessage: string | null;
+  setErrorMessage: (errorMessage: string) => void;
   address: string;
   setAddress: (address: string) => void;
 }
